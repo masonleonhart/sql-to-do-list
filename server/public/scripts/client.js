@@ -9,6 +9,7 @@ function clickListeners() {
 };
 
 function addTask() {
+    // Adds a task and calls function to get all data so the table can refresh
     let newTask = {
         name: $('#task-name').val(),
         description: $('#task-description').val()
@@ -28,6 +29,7 @@ function addTask() {
 };
 
 function getTasks() {
+    // Gets all data from DB and calls function to append data to dom
     console.log(`Retrieving data from DB`);
 
     $.ajax({
@@ -42,16 +44,17 @@ function getTasks() {
 };
 
 function appendData(tasks) {
+    // Appends all data that is passed through from getTasks to the DOM
     $('#viewTasks').empty();
     console.log('Appending data', tasks);
 
     for (const task of tasks) {
         $('#viewTasks').append(`
-            <tr>
+            <tr data-taskid="${task.id}">
                 <td>${task.name}</td>
                 <td>${task.description}</td>
                 <td>${task.status}</td>
-                <td><Button>Complete</button><button>Delete</button></td>
+                <td><Button>Toggle Status</button><button>Delete</button></td>
             </tr>
         `);
     };
