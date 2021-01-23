@@ -1,3 +1,25 @@
-h1 {
-    color: red;
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background-color: white;
+    min-height: 75%;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+textarea {
+    resize: none;
 }

@@ -6,12 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./vendors/jquery.js"></script>
     <script src="./scripts/client.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles/style.css">
     <title>Document</title>
 </head>
 
 <body>
-    <h1>Hello World</h1>
+    <div class="container">
+        <header>
+            <h1>Todo List</h1>
+        </header>
+        <h2>Add Task</h2>
+        <div id="form">
+            <label for="taskName">Task Name</label>
+            <input type="text" id="task-name">
+            <label for="task-description">Task Description</label>
+            <textarea id="task-description" cols="50" rows="7"></textarea>
+        </div>
+    </div>
 </body>
 
 </html>
