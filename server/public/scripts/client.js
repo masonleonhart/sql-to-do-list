@@ -7,6 +7,7 @@ $(() => {
 function clickListeners() {
     $('#submit-button').on('click', addTask);
     $('tbody').on('click', '.delete', deleteTask);
+    $('tbody').on('click', '.toggle', toggleComplete);
 };
 
 function addTask() {
@@ -54,11 +55,39 @@ function appendData(tasks) {
             <tr data-taskid="${task.id}">
                 <td>${task.name}</td>
                 <td>${task.description}</td>
-                <td>${task.status}</td>
-                <td><Button>Toggle Status</button><button class="delete">Delete</button></td>
+                <td class="status">${task.status}</td>
+                <td><Button class="toggle">Toggle Status</button><button class="delete">Delete</button></td>
             </tr>
         `);
     };
+};
+
+function toggleComplete(event) {
+    // Looks at status from DOM and changes to Complete or In progress
+    const taskStatus = $(event.target).parent().parent().find('.status').text();
+    const taskId = $(event.target).closest('tr').data('taskid');
+    let newTaskStatus;
+    
+    if (taskStatus === 'In progress') {
+        newTaskStatus = 'Complete'
+    } else if (taskStatus === 'Complete') {
+        newTaskStatus = 'In progress'
+    };
+
+    console.log(`Updating task at id: ${taskId} from status: ${taskStatus} to status:`, newTaskStatus);
+    
+    $.ajax({
+        method: 'PUT',
+        url: `/list/${taskId}`,
+        data: {
+            statusChange: newTaskStatus
+        }
+    }).then(response => {
+        console.log(`Updated task status at id: ${taskId} successfully`);
+        getTasks();
+    }).catch(error => {
+        console.log('Error in updating data', error.statusText);
+    });
 };
 
 function deleteTask(event) {
