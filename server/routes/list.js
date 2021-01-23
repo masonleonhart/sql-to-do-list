@@ -1,4 +1,5 @@
 const express = require('express');
+const { query } = require('../modules/pool.js');
 const router = express.Router();
 const pool = require('../modules/pool.js');
 
@@ -10,7 +11,8 @@ router.post('/', (req, res) => {
     console.log('Adding task', newTask);
 
     const queryText = `INSERT INTO "tasks" ("name", "description", "status")
-                    VALUES ($1, $2, 'In progress');`;
+                       VALUES ($1, $2, 'In progress');`;
+
     pool.query(queryText, [newTask.name, newTask.description]).then(result => {
         console.log('Added new task successfully');
         res.sendStatus(201);
@@ -39,6 +41,22 @@ router.get('/', (req, res) => {
 
 // Update (PUT)
 
+router.put('/:id', (req, res) => {
+    const statusChange = req.body.statusChange
+    const taskId = req.params.id;
+    console.log(`Updating status to ${statusChange} at id:`, taskId);
+
+    const queryText = `UPDATE "tasks" SET "status" = $1
+                       WHERE "id" = $2;`;
+
+    pool.query(queryText, [statusChange, taskId]).then(result => {
+        console.log(`Updated task at id: ${taskId} to ${statusChange} successfully`);
+        res.sendStatus(200);
+    }).catch(error => {
+        console.log(`Error making query ${queryText}`, error);
+        res.sendStatus(500);
+    });
+})
 
 // Delete (DELETE)
 
