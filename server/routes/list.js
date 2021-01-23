@@ -1,4 +1,5 @@
 const express = require('express');
+const { query } = require('../modules/pool.js');
 const router = express.Router();
 const pool = require('../modules/pool.js');
 
@@ -19,9 +20,19 @@ router.post('/', (req, res) => {
 });
 
 // Read (GET)
-// router.get('/', (req, res) => {
-//     console.log()
-// });
+router.get('/', (req, res) => {
+    console.log('Retreiving data from DB');
+
+    const queryText = `SELECT * FROM "tasks";`;
+
+    pool.query(queryText).then(result => {
+        console.log('Retrieved data successfully');
+        res.status(200).send(result.rows)
+    }).catch(error => {
+        console.log(`Error making query ${queryText}`, error);
+        res.sendStatus(500);
+    });
+});
 
 // Update (PUT)
 
