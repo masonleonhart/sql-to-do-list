@@ -28,7 +28,7 @@ router.get('/', (req, res) => {
     // Retrieves all tasks from the DB
     console.log('Retreiving data from DB');
 
-    const queryText = `SELECT * FROM "tasks";`;
+    const queryText = `SELECT * FROM "tasks" ORDER BY "id" ASC;`;
 
     pool.query(queryText).then(result => {
         console.log('Retrieved data successfully');
@@ -42,6 +42,7 @@ router.get('/', (req, res) => {
 // Update (PUT)
 
 router.put('/:id', (req, res) => {
+    // Updates status of a task based on fed id and status change
     const statusChange = req.body.statusChange
     const taskId = req.params.id;
     console.log(`Updating status to ${statusChange} at id:`, taskId);
