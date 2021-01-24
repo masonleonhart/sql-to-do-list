@@ -77,7 +77,9 @@ function appendData(tasks) {
                 <td>
                     <p id="priority-indicator"><span>1</span><span>2</span><span>3</span></p>
                     <label id="radio-buttons">
-                        ${checkPriority(task)}
+                        <input type="radio" name="priority${task.id}" class="priority-radio" id="${task.id}priorityLow" data-priority="1">
+                        <input type="radio" name="priority${task.id}" class="priority-radio" id="${task.id}priorityMed" data-priority="2">
+                        <input type="radio" name="priority${task.id}" class="priority-radio" id="${task.id}priorityHigh" data-priority="3">
                     </label>
                 </td>
                 <td>${task.name}</td>
@@ -86,31 +88,19 @@ function appendData(tasks) {
                 <td><Button class="toggle">Toggle Status</button><button class="delete">Delete</button></td>
             </tr>
         `);
-    };
-};
 
-function checkPriority(task) {
-    // Checks priority of task passed in and sets checked to radio button based on priority
-    let lowPriority =
-        `<input type="radio" name="priority${task.id}" class="priority-radio" checked data-priority="1">
-    <input type="radio" name="priority${task.id}" class="priority-radio" data-priority="2">
-    <input type="radio" name="priority${task.id}" class="priority-radio" data-priority="3">`;
-    let medPriority =
-        `<input type="radio" name="priority${task.id}" class="priority-radio" data-priority="1">
-    <input type="radio" name="priority${task.id}" class="priority-radio" checked data-priority="2">
-    <input type="radio" name="priority${task.id}" class="priority-radio" data-priority="3">`;
-    let highPriority =
-        `<input type="radio" name="priority${task.id}" class="priority-radio" data-priority="1">
-    <input type="radio" name="priority${task.id}" class="priority-radio" data-priority="2">
-    <input type="radio" name="priority${task.id}" class="priority-radio" checked data-priority="3">`;
-
-    switch (task.priority) {
-        case 1:
-            return lowPriority;
-        case 2:
-            return medPriority;
-        case 3:
-            return highPriority;
+        // Applies the checked attribute to relative priority button
+        switch (task.priority) {
+            case 1:
+                $(`#${task.id}priorityLow`).attr(`checked`, true);
+                break;
+            case 2:
+                $(`#${task.id}priorityMed`).attr(`checked`, true);
+                break;
+            case 3:
+                $(`#${task.id}priorityHigh`).attr(`checked`, true);
+                break;
+        };
     };
 };
 
