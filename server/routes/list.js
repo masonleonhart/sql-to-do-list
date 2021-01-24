@@ -9,8 +9,8 @@ router.post('/', (req, res) => {
     const newTask = req.body;
     console.log('Adding task', newTask);
 
-    const queryText = `INSERT INTO "tasks" ("name", "description", "status")
-                       VALUES ($1, $2, 'In progress');`;
+    const queryText = `INSERT INTO "tasks" ("name", "description", "status", "priority")
+                       VALUES ($1, $2, 'In progress', '2');`;
 
     pool.query(queryText, [newTask.name, newTask.description]).then(result => {
         console.log('Added new task successfully');
@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
     // Retrieves all tasks from the DB
     console.log('Retreiving data from DB');
 
-    const queryText = `SELECT * FROM "tasks" ORDER BY "id" ASC;`;
+    const queryText = `SELECT * FROM "tasks" ORDER BY "priority" DESC;`;
 
     pool.query(queryText).then(result => {
         console.log('Retrieved data successfully');
@@ -40,9 +40,9 @@ router.get('/', (req, res) => {
 
 // Update (PUT)
 
-router.put('/:id', (req, res) => {
+router.put('/status/:id', (req, res) => {
     // Updates status of a task based on fed id and status change
-    const statusChange = req.body.statusChange
+    const statusChange = req.body.statusChange;
     const taskId = req.params.id;
     console.log(`Updating status to ${statusChange} at id:`, taskId);
 
@@ -50,7 +50,25 @@ router.put('/:id', (req, res) => {
                        WHERE "id" = $2;`;
 
     pool.query(queryText, [statusChange, taskId]).then(result => {
-        console.log(`Updated task at id: ${taskId} to ${statusChange} successfully`);
+        console.log(`Updated status at id: ${taskId} to ${statusChange} successfully`);
+        res.sendStatus(200);
+    }).catch(error => {
+        console.log(`Error making query ${queryText}`, error);
+        res.sendStatus(500);
+    });
+});
+
+router.put('/priority/:id', (req, res) => {
+    // Updates priority of a task based on fed id and priority change
+    const priorityChange = req.body.priorityChange;
+    const taskId = req.params.id;
+    console.log(`Updating priority to ${priorityChange} at id:`, taskId);
+
+    const queryText = `UPDATE "tasks" SET "priority" = $1
+                       WHERE "id" = $2;`;
+
+    pool.query(queryText, [priorityChange, taskId]).then(result => {
+        console.log(`Updated priority at id: ${taskId} to ${priorityChange} successfully`);
         res.sendStatus(200);
     }).catch(error => {
         console.log(`Error making query ${queryText}`, error);
