@@ -108,7 +108,7 @@ function appendData(tasks) {
                 </td>
                 <td>${task.name}</td>
                 <td>${task.description}</td>
-                <td></td>
+                <td>${task.timeComplete}</td>
                 <td class="status">${task.status}</td>
                 <td><Button class="toggle">Toggle Status</button><button class="delete">Delete</button></td>
             </tr>
@@ -134,14 +134,17 @@ function toggleComplete(event) {
     // Looks at status from DOM and changes to Complete or In progress
     const taskStatus = $(event.target).parent().parent().find('.status').text();
     const taskId = $(event.target).closest('tr').data('taskid');
+    let timeComplete;
     let newTaskStatus;
 
     switch (taskStatus) {
         case 'In progress':
             newTaskStatus = 'Complete';
+            timeComplete = moment().format('YYYY-DD-MM HH:MM');
             break;
         case 'Complete':
             newTaskStatus = 'In progress';
+            timeComplete = null;
             break;
     };
 
@@ -151,7 +154,8 @@ function toggleComplete(event) {
         method: 'PUT',
         url: `/list/status/${taskId}`,
         data: {
-            statusChange: newTaskStatus
+            statusChange: newTaskStatus,
+            timeComplete
         }
     }).then(response => {
         console.log(`Updated task status at id: ${taskId} successfully`);
