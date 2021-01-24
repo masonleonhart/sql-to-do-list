@@ -73,6 +73,14 @@ function appendData(tasks) {
     for (const task of tasks) {
         $('#viewTasks').append(`
             <tr data-taskid="${task.id}">
+                <td>
+                    <p id="priority-indicator"><span>1</span><span>2</span><span>3</span></p>
+                    <div id="radio-buttons">
+                        <input type="radio" class="custom-radio low-priority" data-priority="1">
+                        <input type="radio" class="custom-radio med-priority" checked data-priority="2">
+                        <input type="radio" class="custom-radio high-priority" data-priority="3">
+                    </div>
+                </td>
                 <td>${task.name}</td>
                 <td>${task.description}</td>
                 <td class="status">${task.status}</td>
@@ -98,7 +106,7 @@ function toggleComplete(event) {
 
     $.ajax({
         method: 'PUT',
-        url: `/list/${taskId}`,
+        url: `/list/status/${taskId}`,
         data: {
             statusChange: newTaskStatus
         }

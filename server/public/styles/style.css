@@ -24,3 +24,15 @@ header {
     height: 100px;
     resize: none;
 }
+
+#priority-indicator {
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+    font-size: 12px;
+}
+
+#radio-buttons {
+    display: flex;
+    justify-content: space-around;
+}
