@@ -1,5 +1,4 @@
 const express = require('express');
-const { query } = require('../modules/pool.js');
 const router = express.Router();
 const pool = require('../modules/pool.js');
 
@@ -57,7 +56,7 @@ router.put('/:id', (req, res) => {
         console.log(`Error making query ${queryText}`, error);
         res.sendStatus(500);
     });
-})
+});
 
 // Delete (DELETE)
 

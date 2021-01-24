@@ -23,3 +23,7 @@ header {
 textarea {
     resize: none;
 }
+
+#task-description {
+    height: 100px;
+}

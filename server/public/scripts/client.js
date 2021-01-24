@@ -8,14 +8,34 @@ function clickListeners() {
     $('#submit-button').on('click', addTask);
     $('tbody').on('click', '.delete', deleteTask);
     $('tbody').on('click', '.toggle', toggleComplete);
+    $('#add-task').on('click', addTaskPopup);
 };
 
-function addTask() {
+function addTaskPopup() {
+    // Pops open a sweet alert to add a task
+    Swal.fire({
+        title: 'Add Task',
+        html: `<input type="text" id="task-name" class="swal2-input" placeholder="Task Name">
+        <textarea class="swal2-input" id="task-description" placeholder="Task Description"></textarea>`,
+        confirmButtonText: 'Add task',
+        focusConfirm: false,
+        showCancelButton: true,
+        preConfirm: () => {
+            const name = Swal.getPopup().querySelector('#task-name').value
+            const description = Swal.getPopup().querySelector('#task-description').value
+            if (!name || !description) {
+                Swal.showValidationMessage(`Please enter a task name and a task description`)
+            };
+            return { name: name, description: description }
+        }
+    }).then((result) => {
+        addTask(result.value);
+    });
+};
+
+function addTask(task) {
     // Adds a task and calls function to get all data so the table can refresh
-    let newTask = {
-        name: $('#task-name').val(),
-        description: $('#task-description').val()
-    }
+    let newTask = task;
     console.log('Adding task to list', newTask);
 
     $.ajax({
@@ -67,7 +87,7 @@ function toggleComplete(event) {
     const taskStatus = $(event.target).parent().parent().find('.status').text();
     const taskId = $(event.target).closest('tr').data('taskid');
     let newTaskStatus;
-    
+
     if (taskStatus === 'In progress') {
         newTaskStatus = 'Complete'
     } else if (taskStatus === 'Complete') {
@@ -75,7 +95,7 @@ function toggleComplete(event) {
     };
 
     console.log(`Updating task at id: ${taskId} from status: ${taskStatus} to status:`, newTaskStatus);
-    
+
     $.ajax({
         method: 'PUT',
         url: `/list/${taskId}`,
