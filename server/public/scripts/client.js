@@ -5,8 +5,7 @@ $(() => {
 });
 
 function clickListeners() {
-    $('#submit-button').on('click', addTask);
-    $('#viewTasks').on('click', '.delete', deleteTask);
+    $('#viewTasks').on('click', '.delete', popupDelete);
     $('#viewTasks').on('click', '.toggle', toggleComplete);
     $('#add-task').on('click', addTaskPopup);
     $('#viewTasks').on('click', '.priority-radio', changePriority);
@@ -29,8 +28,14 @@ function addTaskPopup() {
             };
             return { name: name, description: description }
         }
-    }).then((result) => {
-        addTask(result.value);
+    }).then(result => {
+        if (result.isConfirmed) {
+            addTask(result.value);
+            Swal.fire("Task added!", "Your task has been added.", "success");
+        } else {
+            Swal.fire("Canceled!", "Your task has not been added.", "error");
+            return;
+        };
     });
 };
 
@@ -155,9 +160,30 @@ function changePriority(event) {
     });
 };
 
-function deleteTask(event) {
-    // Deletes task based on taskId grabbed from closest tr
+function popupDelete (event) {
+    // A popup to confirm or cancel delete
     const taskId = $(event.target).closest('tr').data('taskid')
+    Swal.fire({
+        title: 'Delete',
+        text: 'Are you sure you want to delete this task?',
+        icon: 'warning',
+        confirmButtonText: 'Delete task',
+        focusConfirm: false,
+        showCancelButton: true,
+        closeOnConfirm: false,
+    }).then(result => {
+        if (result.isConfirmed) {
+            deleteTask(taskId);
+            Swal.fire("Deleted!", "Your task has been deleted.", "success");
+        } else {
+            Swal.fire("Canceled!", "Your task has not been deleted.", "error");
+            return;
+        };
+    });
+};
+
+function deleteTask(taskId) {
+    // Deletes task based on taskId grabbed from closest tr
     console.log('Deleting task at id:', taskId);
 
     $.ajax({
