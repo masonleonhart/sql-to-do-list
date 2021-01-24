@@ -20,6 +20,7 @@ header {
     align-items: center;
 }
 
-textarea {
+#task-description {
+    height: 100px;
     resize: none;
 }
