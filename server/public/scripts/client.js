@@ -5,10 +5,10 @@ $(() => {
 });
 
 function clickListeners() {
-    $('#viewTasks').on('click', '.delete', popupDelete);
-    $('#viewTasks').on('click', '.toggle', toggleComplete);
+    $('table').on('click', '.delete', popupDelete);
+    $('table').on('click', '.toggle', toggleComplete);
     $('#add-task').on('click', addTaskPopup);
-    $('#viewTasks').on('click', '.priority-radio', changePriority);
+    $('table').on('click', '.priority-radio', changePriority);
 };
 
 function addTaskPopup() {
@@ -74,10 +74,12 @@ function getTasks() {
 function appendData(tasks) {
     // Appends all data that is passed through from getTasks to the DOM
     $('#viewTasks').empty();
+    $('#completedTasks').empty();
     console.log('Appending data', tasks);
 
     for (const task of tasks) {
-        $('#viewTasks').append(`
+        if (task.status === 'In progress') {
+            $('#viewTasks').append(`
             <tr data-taskid="${task.id}">
                 <td>
                     <p id="priority-indicator"><span>1</span><span>2</span><span>3</span></p>
@@ -93,6 +95,25 @@ function appendData(tasks) {
                 <td><Button class="toggle">Toggle Status</button><button class="delete">Delete</button></td>
             </tr>
         `);
+        } else {
+            $('#completedTasks').append(`
+            <tr data-taskid="${task.id}">
+                <td>
+                    <p id="priority-indicator"><span>1</span><span>2</span><span>3</span></p>
+                    <label id="radio-buttons">
+                        <input type="radio" name="priority${task.id}" class="priority-radio" id="${task.id}priorityLow" data-priority="1">
+                        <input type="radio" name="priority${task.id}" class="priority-radio" id="${task.id}priorityMed" data-priority="2">
+                        <input type="radio" name="priority${task.id}" class="priority-radio" id="${task.id}priorityHigh" data-priority="3">
+                    </label>
+                </td>
+                <td>${task.name}</td>
+                <td>${task.description}</td>
+                <td>${task.timeComplete}</td>
+                <td class="status">${task.status}</td>
+                <td><Button class="toggle">Toggle Status</button><button class="delete">Delete</button></td>
+            </tr>
+            `);
+        };
 
         // Applies the checked attribute to relative priority button
         switch (task.priority) {
@@ -113,14 +134,17 @@ function toggleComplete(event) {
     // Looks at status from DOM and changes to Complete or In progress
     const taskStatus = $(event.target).parent().parent().find('.status').text();
     const taskId = $(event.target).closest('tr').data('taskid');
+    let timeComplete;
     let newTaskStatus;
 
     switch (taskStatus) {
         case 'In progress':
             newTaskStatus = 'Complete';
+            timeComplete = moment().format('YYYY-DD-MM HH:MM');
             break;
         case 'Complete':
             newTaskStatus = 'In progress';
+            timeComplete = null;
             break;
     };
 
@@ -130,7 +154,8 @@ function toggleComplete(event) {
         method: 'PUT',
         url: `/list/status/${taskId}`,
         data: {
-            statusChange: newTaskStatus
+            statusChange: newTaskStatus,
+            timeComplete
         }
     }).then(response => {
         console.log(`Updated task status at id: ${taskId} successfully`);

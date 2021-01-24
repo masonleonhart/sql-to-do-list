@@ -43,13 +43,15 @@ router.get('/', (req, res) => {
 router.put('/status/:id', (req, res) => {
     // Updates status of a task based on fed id and status change
     const statusChange = req.body.statusChange;
+    const timeComplete = req.body.timeComplete;
     const taskId = req.params.id;
     console.log(`Updating status to ${statusChange} at id:`, taskId);
 
-    const queryText = `UPDATE "tasks" SET "status" = $1
-                       WHERE "id" = $2;`;
+    const queryText = `UPDATE "tasks" SET "status" = $1,
+                       "timeComplete" = $2
+                       WHERE "id" = $3;`;
 
-    pool.query(queryText, [statusChange, taskId]).then(result => {
+    pool.query(queryText, [statusChange, timeComplete, taskId]).then(result => {
         console.log(`Updated status at id: ${taskId} to ${statusChange} successfully`);
         res.sendStatus(200);
     }).catch(error => {
