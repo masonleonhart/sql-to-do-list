@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
     // Retrieves all tasks from the DB
     console.log('Retreiving data from DB');
 
-    const queryText = `SELECT * FROM "tasks" ORDER BY "id" ASC;`;
+    const queryText = `SELECT * FROM "tasks" ORDER BY "priority" DESC;`;
 
     pool.query(queryText).then(result => {
         console.log('Retrieved data successfully');
@@ -62,7 +62,7 @@ router.put('/priority/:id', (req, res) => {
     // Updates priority of a task based on fed id and priority change
     const priorityChange = req.body.priorityChange;
     const taskId = req.params.id;
-    console.log(`Updating status to ${priorityChange} at id:`, taskId);
+    console.log(`Updating priority to ${priorityChange} at id:`, taskId);
 
     const queryText = `UPDATE "tasks" SET "priority" = $1
                        WHERE "id" = $2;`;

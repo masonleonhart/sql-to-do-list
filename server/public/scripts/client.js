@@ -6,9 +6,10 @@ $(() => {
 
 function clickListeners() {
     $('#submit-button').on('click', addTask);
-    $('tbody').on('click', '.delete', deleteTask);
-    $('tbody').on('click', '.toggle', toggleComplete);
+    $('#viewTasks').on('click', '.delete', deleteTask);
+    $('#viewTasks').on('click', '.toggle', toggleComplete);
     $('#add-task').on('click', addTaskPopup);
+    $('#viewTasks').on('click', '.priority-radio', changePriority);
 };
 
 function addTaskPopup() {
@@ -75,11 +76,9 @@ function appendData(tasks) {
             <tr data-taskid="${task.id}">
                 <td>
                     <p id="priority-indicator"><span>1</span><span>2</span><span>3</span></p>
-                    <div id="radio-buttons">
-                        <input type="radio" class="custom-radio low-priority" data-priority="1">
-                        <input type="radio" class="custom-radio med-priority" checked data-priority="2">
-                        <input type="radio" class="custom-radio high-priority" data-priority="3">
-                    </div>
+                    <label id="radio-buttons">
+                        ${checkPriority(task)}
+                    </label>
                 </td>
                 <td>${task.name}</td>
                 <td>${task.description}</td>
@@ -90,16 +89,44 @@ function appendData(tasks) {
     };
 };
 
+function checkPriority(task) {
+    // Checks priority of task passed in and sets checked to radio button based on priority
+    let lowPriority =
+        `<input type="radio" name="priority${task.id}" class="priority-radio" checked data-priority="1">
+    <input type="radio" name="priority${task.id}" class="priority-radio" data-priority="2">
+    <input type="radio" name="priority${task.id}" class="priority-radio" data-priority="3">`;
+    let medPriority =
+        `<input type="radio" name="priority${task.id}" class="priority-radio" data-priority="1">
+    <input type="radio" name="priority${task.id}" class="priority-radio" checked data-priority="2">
+    <input type="radio" name="priority${task.id}" class="priority-radio" data-priority="3">`;
+    let highPriority =
+        `<input type="radio" name="priority${task.id}" class="priority-radio" data-priority="1">
+    <input type="radio" name="priority${task.id}" class="priority-radio" data-priority="2">
+    <input type="radio" name="priority${task.id}" class="priority-radio" checked data-priority="3">`;
+
+    switch (task.priority) {
+        case 1:
+            return lowPriority;
+        case 2:
+            return medPriority;
+        case 3:
+            return highPriority;
+    };
+};
+
 function toggleComplete(event) {
     // Looks at status from DOM and changes to Complete or In progress
     const taskStatus = $(event.target).parent().parent().find('.status').text();
     const taskId = $(event.target).closest('tr').data('taskid');
     let newTaskStatus;
 
-    if (taskStatus === 'In progress') {
-        newTaskStatus = 'Complete'
-    } else if (taskStatus === 'Complete') {
-        newTaskStatus = 'In progress'
+    switch (taskStatus) {
+        case 'In progress':
+            newTaskStatus = 'Complete';
+            break;
+        case 'Complete':
+            newTaskStatus = 'In progress';
+            break;
     };
 
     console.log(`Updating task at id: ${taskId} from status: ${taskStatus} to status:`, newTaskStatus);
@@ -112,6 +139,26 @@ function toggleComplete(event) {
         }
     }).then(response => {
         console.log(`Updated task status at id: ${taskId} successfully`);
+        getTasks();
+    }).catch(error => {
+        console.log('Error in updating data', error.statusText);
+    });
+};
+
+function changePriority(event) {
+    // Listens for radio button click and changes priority
+    const taskPriority = $(event.target).data('priority');
+    const taskId = $(event.target).closest('tr').data('taskid');
+    console.log(`Updating task at id: ${taskId} to priority ${taskPriority}`);
+
+    $.ajax({
+        method: 'PUT',
+        url: `list/priority/${taskId}`,
+        data: {
+            priorityChange: taskPriority
+        }
+    }).then(response => {
+        console.log(`Updated task priority at id: ${taskId} successfully`);
         getTasks();
     }).catch(error => {
         console.log('Error in updating data', error.statusText);
