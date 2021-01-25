@@ -15,11 +15,16 @@ function addTaskPopup() {
     // Pops open a sweet alert to add a task
     Swal.fire({
         title: 'Add Task',
-        html: `<input type="text" id="task-name" class="swal2-input" placeholder="Task Name">
+        html: `
+        <label for="task-name" class="add-labels">Task Name</label>
+        <input type="text" id="task-name" class="swal2-input" placeholder="Task Name">
+        <label for="task-description" class="add-labels">Task Description</label>
         <textarea class="swal2-input" id="task-description" placeholder="Task Description"></textarea>`,
         confirmButtonText: 'Add task',
+        confirmButtonColor: '#28a745',
         focusConfirm: false,
         showCancelButton: true,
+        cancelButtonColor: '#dc3545',
         preConfirm: () => {
             const name = Swal.getPopup().querySelector('#task-name').value
             const description = Swal.getPopup().querySelector('#task-description').value
@@ -90,9 +95,9 @@ function appendData(tasks) {
                     </label>
                 </td>
                 <td>${task.name}</td>
-                <td>${task.description}</td>
+                <td class="description">${task.description}</td>
                 <td class="status">${task.status}</td>
-                <td><Button class="toggle">Toggle Status</button><button class="delete">Delete</button></td>
+                <td class="btn-group"><Button class="toggle btn btn-success">Complete</button><button class="delete btn btn-danger">Delete</button></td>
             </tr>
         `);
         } else {
@@ -107,10 +112,10 @@ function appendData(tasks) {
                     </label>
                 </td>
                 <td>${task.name}</td>
-                <td>${task.description}</td>
+                <td class="description">${task.description}</td>
                 <td>${task.timeComplete}</td>
                 <td class="status">${task.status}</td>
-                <td><Button class="toggle">Toggle Status</button><button class="delete">Delete</button></td>
+                <td class="btn-group"><Button class="toggle btn btn-success">Complete</button><button class="delete btn btn-danger">Delete</button></td>
             </tr>
             `);
         };
@@ -193,9 +198,10 @@ function popupDelete (event) {
         text: 'Are you sure you want to delete this task?',
         icon: 'warning',
         confirmButtonText: 'Delete task',
+        confirmButtonColor: '#28a745',
         focusConfirm: false,
         showCancelButton: true,
-        closeOnConfirm: false,
+        cancelButtonColor: '#dc3545',
     }).then(result => {
         if (result.isConfirmed) {
             deleteTask(taskId);

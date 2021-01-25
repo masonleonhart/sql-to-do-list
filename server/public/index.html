@@ -6,48 +6,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./vendors/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>    <script src="./scripts/client.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+        crossorigin="anonymous"></script>
+    <script src="./scripts/client.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles/style.css">
     <title>Todo List</title>
 </head>
 
-<body>
+<body id="important">
     <div class="container">
         <header>
             <h1>Todo List</h1>
         </header>
-        <h2>All Tasks</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Priority</th>
-                    <th>Task Name</th>
-                    <th>Task Description</th>
-                    <th>Status</th>
-                    <th><button id="add-task">Add Task</button></th>
-                </tr>
-            </thead>
-            <tbody id="viewTasks">
+        <br>
+        <main>
+            <h2>All Tasks</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Priority</th>
+                        <th>Task Name</th>
+                        <th class="description">Task Description</th>
+                        <th>Status</th>
+                        <th><button class="btn btn-success" id="add-task">Add Task</button></th>
+                    </tr>
+                </thead>
+                <tbody id="viewTasks">
 
-            </tbody>
-        </table>
-        <h2>Completed Tasks</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Priority</th>
-                    <th>Task Name</th>
-                    <th>Task Description</th>
-                    <th>Time Completed</th>
-                    <th>Status</th>
-                    <th>Controls</th>
-                </tr>
-            </thead>
-            <tbody id="completedTasks">
+                </tbody>
+            </table>
+            <br>
+            <h2>Completed Tasks</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Priority</th>
+                        <th>Task Name</th>
+                        <th class="description">Task Description</th>
+                        <th>Time Completed</th>
+                        <th>Status</th>
+                        <th>Controls</th>
+                    </tr>
+                </thead>
+                <tbody id="completedTasks">
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </main>
     </div>
 </body>
 
