@@ -8,7 +8,7 @@ This is a todo list that allows you to add tasks, mark tasks complete or in prog
 
 ## Application Preview
 
-![Wireframe](application-preview.png)
+![Wireframe](./images/application-preview.png)
 
 ## Application Prerequisites
 
@@ -24,18 +24,18 @@ This is a todo list that allows you to add tasks, mark tasks complete or in prog
 
 # Usage
 
-![Wireframe](add-task.png)
-![Wireframe](add-task-popup.png)
+![Wireframe](./images/add-task.png)
+![Wireframe](./images/add-task-popup.png)
 
 1. Add a task by clicking the add task button and filling out the popup form
 
-![Wireframe](complete.png)
-![Wireframe](in-progress.png)
+![Wireframe](./images/complete.png)
+![Wireframe](./images/in-progress.png)
 
 2. Move tasks from table to table by clicking either the complete or in progress buttons
 
-![Wireframe](delete.png)
-![Wireframe](delete-popup.png)
+![Wireframe](./images/delete.png)
+![Wireframe](./images/delete-popup.png)
 
 3. Delete a task by clicking the delete button and then clicking the delete task button
 
