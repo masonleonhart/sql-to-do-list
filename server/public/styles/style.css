@@ -45,18 +45,21 @@ header {
     resize: none;
 }
 
-#priority-indicator {
+.priority {
+    width: 7%;
+}
+
+.priority-indicator {
     display: flex;
     justify-content: space-around;
     margin: 0;
     font-size: 12px;
 }
 
-#radio-buttons {
+.radio-buttons {
     display: flex;
     justify-content: space-around;
 }
-
 
 tr:nth-child(odd) {
     background-color: #CBF3F0;
@@ -65,6 +68,10 @@ tr:nth-child(odd) {
 th {
     text-align: center;
     background-color: #758BFD;
+}
+
+tr {
+    text-align: center;
 }
 
 td {

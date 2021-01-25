@@ -24,7 +24,6 @@ function addTaskPopup() {
         confirmButtonColor: '#28a745',
         focusConfirm: false,
         showCancelButton: true,
-        cancelButtonColor: '#dc3545',
         preConfirm: () => {
             const name = Swal.getPopup().querySelector('#task-name').value
             const description = Swal.getPopup().querySelector('#task-description').value
@@ -86,9 +85,9 @@ function appendData(tasks) {
         if (task.status === 'In progress') {
             $('#viewTasks').append(`
             <tr data-taskid="${task.id}">
-                <td>
-                    <p id="priority-indicator"><span>1</span><span>2</span><span>3</span></p>
-                    <label id="radio-buttons">
+                <td class="priority">
+                    <p class="priority-indicator"><span>1</span><span>2</span><span>3</span></p>
+                    <label class="radio-buttons">
                         <input type="radio" name="priority${task.id}" class="priority-radio" id="${task.id}priorityLow" data-priority="1">
                         <input type="radio" name="priority${task.id}" class="priority-radio" id="${task.id}priorityMed" data-priority="2">
                         <input type="radio" name="priority${task.id}" class="priority-radio" id="${task.id}priorityHigh" data-priority="3">
@@ -97,15 +96,15 @@ function appendData(tasks) {
                 <td>${task.name}</td>
                 <td class="description">${task.description}</td>
                 <td class="status">${task.status}</td>
-                <td class="btn-group"><Button class="toggle btn btn-success">Complete</button><button class="delete btn btn-danger">Delete</button></td>
+                <td class="btn-group controls"><Button class="toggle btn btn-success">Complete</button><button class="delete btn btn-danger">Delete</button></td>
             </tr>
         `);
         } else {
             $('#completedTasks').append(`
             <tr data-taskid="${task.id}">
-                <td>
-                    <p id="priority-indicator"><span>1</span><span>2</span><span>3</span></p>
-                    <label id="radio-buttons">
+                <td class="priority">
+                    <p class="priority-indicator"><span>1</span><span>2</span><span>3</span></p>
+                    <label class="radio-buttons">
                         <input type="radio" name="priority${task.id}" class="priority-radio" id="${task.id}priorityLow" data-priority="1">
                         <input type="radio" name="priority${task.id}" class="priority-radio" id="${task.id}priorityMed" data-priority="2">
                         <input type="radio" name="priority${task.id}" class="priority-radio" id="${task.id}priorityHigh" data-priority="3">
@@ -115,7 +114,7 @@ function appendData(tasks) {
                 <td class="description">${task.description}</td>
                 <td>${task.timeComplete}</td>
                 <td class="status">${task.status}</td>
-                <td class="btn-group"><Button class="toggle btn btn-success">Complete</button><button class="delete btn btn-danger">Delete</button></td>
+                <td class="btn-group controls"><Button class="toggle btn btn-success">In progress</button><button class="delete btn btn-danger">Delete</button></td>
             </tr>
             `);
         };
@@ -198,10 +197,9 @@ function popupDelete (event) {
         text: 'Are you sure you want to delete this task?',
         icon: 'warning',
         confirmButtonText: 'Delete task',
-        confirmButtonColor: '#28a745',
+        confirmButtonColor: '#dc3545',
         focusConfirm: false,
         showCancelButton: true,
-        cancelButtonColor: '#dc3545',
     }).then(result => {
         if (result.isConfirmed) {
             deleteTask(taskId);
