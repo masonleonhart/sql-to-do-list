@@ -36,7 +36,11 @@ This is a todo list that allows you to add tasks, mark tasks complete or in prog
 
 ![Wireframe](./images/in-progress.png)
 
-3. Delete a task by clicking the delete button and then clicking the delete task button
+3. Change the priority of a task by clicking one of the three priority buttons. Tasks come in as "2" or medium priority, with "1" being the lowest and "3" being the highest priority.
+
+![Wireframe](./images/priority.png)
+
+4. Delete a task by clicking the delete button and then clicking the delete task button
 
 ![Wireframe](./images/delete.png)
 
