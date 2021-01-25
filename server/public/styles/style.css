@@ -2,22 +2,42 @@ html, body {
     height: 100%;
 }
 
+#important {
+    height: 100% !important;
+}
+
 body {
-    background-color: aqua;
+    background-color: #FF8600;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .container {
     background-color: white;
-    min-height: 75%;
+    min-width: 75%;
+    height: 87% !important;
+    max-height: 90%;
+    border-radius: 10px;
+    padding: 0;
+}
+
+main {
+    height: 85%;
+    overflow-y: auto;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 header {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #27187E;
+    color: #f1f2f6;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 #task-description {
@@ -35,4 +55,24 @@ header {
 #radio-buttons {
     display: flex;
     justify-content: space-around;
+}
+
+
+tr:nth-child(odd) {
+    background-color: #CBF3F0;
+}
+
+th {
+    text-align: center;
+    background-color: #758BFD;
+}
+
+td {
+    text-align: center;
+    padding: 5px;
+}
+
+.description {
+    width: 40%;
+    text-align: left;
 }
