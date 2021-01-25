@@ -140,7 +140,7 @@ function toggleComplete(event) {
     switch (taskStatus) {
         case 'In progress':
             newTaskStatus = 'Complete';
-            timeComplete = moment().format('YYYY-DD-MM HH:MM');
+            timeComplete = moment().format('MM-DD-YYYY HH:mm');
             break;
         case 'Complete':
             newTaskStatus = 'In progress';
