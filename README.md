@@ -22,7 +22,7 @@ This is a todo list that allows you to add tasks, mark tasks complete or in prog
 2. Copy SQL from database.sql into a database (Postgres and Postico recommended)
 3. Run npm start to start the server
 
-# Usage
+## Usage
 
 1. Add a task by clicking the add task button and filling out the popup form
 
